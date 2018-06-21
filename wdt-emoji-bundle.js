@@ -245,7 +245,7 @@
   wdtEmojiBundle.openPicker = function (ev) {
     var self = this;
 
-    wdtEmojiBundle.input = document.querySelector("#room_detail_message_form");
+    wdtEmojiBundle.input = document.querySelector(".wdt-emoji-bundle-enabled");
 
     // @todo - [needim] - popup must be visible in viewport calculate carefully
     function findBestAvailablePosition(el) {

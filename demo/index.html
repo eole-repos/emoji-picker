@@ -5,13 +5,8 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <title>wdt-emoji-bundle Demo</title>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css"/>
-
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&amp;subset=latin-ext" rel="stylesheet">
-
+    <title>EmojiPicker Demo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="../wdt-emoji-bundle.css"/>
     <script type="text/javascript" src="../emoji.min.js"></script>
     <script type="text/javascript" src="../emoji-data-by-category.js"></script>
@@ -33,6 +28,7 @@
             min-width: 65%;
             outline: 0;
             padding: 6px 6px 0px 12px;
+            margin-bottom: 6px;
             font-size: 14px;
             line-height: 2;
             color: #555;
@@ -49,6 +45,10 @@
         }
         .wdt-emoji-bundle-enabled > div {
             height: 28px;
+        }
+        .wdt-emoji-popup {
+            margin-top: 6px;
+            border: 1px solid #ccc;
         }
     </style>
 </head>
@@ -71,42 +71,33 @@
                     <div class="wdt-emoji-search-results"></div>
                 </div>
             </div>
-            <div class="wdt-emoji-bundle-enabled wdt-emoji-open-on-colon" contenteditable="true">
-                <div><br></div>
+            <div>
+                <div class="wdt-emoji-bundle-enabled wdt-emoji-open-on-colon" contenteditable="true">
+                    <div><br></div>
+                </div>
+                <div class="btn btn-primary" onclick="openPicker()">Select emoji</btn>
             </div>
-        </div>
-    </div>
-</div>
-
-<div class="wdt-emoji-popup">
-    <div class="wdt-emoji-menu-content">
-        <div id="wdt-emoji-menu-header">
-            <a class="wdt-emoji-tab active" data-group-name="Recent"></a>
-            <a class="wdt-emoji-tab" data-group-name="Custom"></a>
-            <a class="wdt-emoji-tab" data-group-name="People"></a>
-            <a class="wdt-emoji-tab" data-group-name="Nature"></a>
-            <a class="wdt-emoji-tab" data-group-name="Foods"></a>
-            <a class="wdt-emoji-tab" data-group-name="Activity"></a>
-            <a class="wdt-emoji-tab" data-group-name="Places"></a>
-            <a class="wdt-emoji-tab" data-group-name="Objects"></a>
-            <a class="wdt-emoji-tab" data-group-name="Symbols"></a>
-            <a class="wdt-emoji-tab" data-group-name="Flags"></a>
-        </div>
-        <div class="wdt-emoji-scroll-wrapper">
-            <div id="wdt-emoji-menu-items">
-                <div class="wdt-emoji-sections"></div>
-            </div>
-        </div>
-        <div id="wdt-emoji-footer">
-            <div id="wdt-emoji-preview">
-                <span id="wdt-emoji-preview-img"></span>
-                <div id="wdt-emoji-preview-text">
-                    <span id="wdt-emoji-preview-name"></span>
-                    <br>
-                    <span id="wdt-emoji-preview-aliases"></span>
+            <div class="wdt-emoji-popup">
+                <div class="wdt-emoji-menu-content">
+                    <div id="wdt-emoji-menu-header">
+                        <a class="wdt-emoji-tab active" data-group-name="Recent"></a>
+                        <a class="wdt-emoji-tab" data-group-name="Custom"></a>
+                        <a class="wdt-emoji-tab" data-group-name="People"></a>
+                        <a class="wdt-emoji-tab" data-group-name="Nature"></a>
+                        <a class="wdt-emoji-tab" data-group-name="Foods"></a>
+                        <a class="wdt-emoji-tab" data-group-name="Activity"></a>
+                        <a class="wdt-emoji-tab" data-group-name="Places"></a>
+                        <a class="wdt-emoji-tab" data-group-name="Objects"></a>
+                        <a class="wdt-emoji-tab" data-group-name="Symbols"></a>
+                        <a class="wdt-emoji-tab" data-group-name="Flags"></a>
+                    </div>
+                    <div class="wdt-emoji-scroll-wrapper">
+                        <div id="wdt-emoji-menu-items">
+                            <div class="wdt-emoji-sections"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div id="wdt-emoji-preview-bundle"></div>
         </div>
     </div>
 </div>
@@ -131,6 +122,11 @@
             console.log('afterSelect', a, b);
         });
     })();
+
+    function openPicker(){
+        var ele = document.querySelector(".wdt-emoji-bundle-enabled");
+        wdtEmojiBundle.openPicker.call(ele, {target: ele});
+    }
 </script>
 </body>
 </html>
