@@ -1,8 +1,35 @@
+.emoji-search-lists {
+  bottom: 0px;
+  left: 12px;
+  right: 6px;
+  top: auto;
+  z-index: 10001;
+  position: absolute;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  min-width: 100px;
+  min-height: 40px;
+  max-height: 120px;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 6px 6px 0 0 / 6px 6px 0 0;
+}
+
+.wdt-emoji-search-results {
+  background: #fff;
+  padding: 0;
+  line-height: 1.4rem;
+  box-shadow: 0 5px 10px rgba(0,0,0,.12);
+}
+.wdt-emoji-search-results:empty{
+  visibility:hidden;
+}
+
 .wdt-emoji-popup,
 .wdt-emoji-popup * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  /* z-index: 10000; */
 }
 
 /* hide unavailable fonts @todo - check fallbacks */
@@ -27,10 +54,6 @@ body[data-wdt-emoji-bundle='apple'] .wdt-emoji[data-has-img-apple='false'] {
   cursor: pointer;
 }
 
-.wdt-emoji-picker-parent {
-  position: relative;
-}
-
 .wdt-emoji-picker span.emoji-outer.emoji-sizer {
   width: 18px;
   height: 18px;
@@ -45,6 +68,7 @@ body[data-wdt-emoji-bundle='apple'] .wdt-emoji[data-has-img-apple='false'] {
   left: 0;
 
   visibility: hidden;
+  display: none;
 
   width: 357px;
   max-width: 100%;
@@ -54,7 +78,6 @@ body[data-wdt-emoji-bundle='apple'] .wdt-emoji[data-has-img-apple='false'] {
   transition: opacity 50ms ease, bottom 1s ease-out;
 
   opacity: 0;
-  border: 1px solid #dedede;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -63,22 +86,22 @@ body[data-wdt-emoji-bundle='apple'] .wdt-emoji[data-has-img-apple='false'] {
 
 .wdt-emoji-popup.open {
   visibility: visible;
-
+  display: block;
   opacity: 1;
 }
 
-#wdt-emoji-menu-header {
+/* #wdt-emoji-menu-header {
   padding: 4px 0 0 7px;
 
   border-bottom: 1px solid rgba(0, 0, 0, .15);
   background: #f7f7f7;
-}
+} */
 
-.wdt-emoji-tab {
+/* .wdt-emoji-tab {
   display: inline-block;
 
   width: 28px;
-  margin-right: 2.5px;
+  margin-right: 6px;
   padding: 4px;
 
   transition: border-color 150ms ease-out;
@@ -98,7 +121,7 @@ body[data-wdt-emoji-bundle='apple'] .wdt-emoji[data-has-img-apple='false'] {
 
   color: #9e9ea6;
   border-bottom: 3px solid #e7543d;
-}
+} */
 
 #wdt-emoji-search,
 #wdt-emoji-search:focus {
@@ -150,11 +173,14 @@ body[data-wdt-emoji-bundle='apple'] .wdt-emoji[data-has-img-apple='false'] {
   -webkit-overflow-scrolling: touch;
   overflow-anchor: none;
   height: 257px;
-  padding-bottom: 30px;
 }
 
 .wdt-emoji-sections {
   padding: 0 5px;
+}
+
+.emoji-clickable {
+  cursor: pointer;
 }
 
 .wdt-emoji {
@@ -166,7 +192,7 @@ body[data-wdt-emoji-bundle='apple'] .wdt-emoji[data-has-img-apple='false'] {
 
   margin-right: 2.5px !important;
   margin-bottom: 1px;
-  padding: 6px;
+  padding: 8px;
 
   -webkit-transition: background 500ms ease-out;
   -moz-transition: background 500ms ease-out;
@@ -239,12 +265,34 @@ span.emoji-sizer {
   line-height: .81em;
 }
 
+span.emoji-size-medium {
+  width: 26px!important;
+  height: 26px!important;
+}
+
+span.emoji-size-large {
+  width: 32px!important;
+  height: 32px!important;
+}
+
 span.emoji-outer {
   display: -moz-inline-box;
   display: inline-block;
 
   width: 22px;
   height: 22px;
+  margin: 0.5px;
+  vertical-align: middle;
+
+  *display: inline;
+}
+
+span.emoji-only {
+  display: -moz-inline-box;
+  display: inline-block;
+
+  width: 46px;
+  height: 46px;
   margin-top: -2px;
 
   vertical-align: middle;
@@ -267,10 +315,10 @@ span.emoji-inner {
 }
 
 img.emoji {
-  width: 1em;
-  height: 1em;
+  width: 1.5em;
+  height: 1.5em;
 }
-
+/* 
 #wdt-emoji-footer {
   position: absolute;
   bottom: 0;
@@ -281,21 +329,8 @@ img.emoji {
 
   border-top: 1px solid rgba(0, 0, 0, .15);
   background: #f7f7f7;
-}
-
-#wdt-emoji-no-result {
-  font-size: 10px;
-  font-weight: 400;
-
-  clear: both;
-
-  padding: 20px;
-
-  text-align: center;
-
-  color: #bababa;
-}
-
+} */
+/* 
 #wdt-emoji-preview {
   padding: .3rem 0 0 .7rem;
 
@@ -333,19 +368,7 @@ img.emoji {
 
   opacity: 1;
   color: #989ba0;
-}
-
-#wdt-emoji-search-result-title,
-#wdt-emoji-no-result {
-  display: none;
-}
-
-#wdt-emoji-search-result-title.wdt-show,
-#wdt-emoji-no-result.wdt-show {
-  display: block;
-
-  margin: 0 5px;
-}
+} */
 
 .wdt-inline {
   display: inline;
@@ -354,7 +377,7 @@ img.emoji {
 .wdt-search-on {
   display: none;
 }
-
+/* 
 .wdt-emoji-popup.preview-mode #wdt-emoji-preview-bundle {
   opacity: 0;
 }
@@ -389,7 +412,7 @@ img.emoji {
   left: 3px;
 
   color: #444;
-}
+} */
 
 .wdt-emoji-popup-mobile-closer {
   font-size: 25px !important;
@@ -442,8 +465,7 @@ and (orientation: portrait) {
   }
 
   .wdt-emoji-popup {
-    height: 206px;
-
+    height: 160px;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
