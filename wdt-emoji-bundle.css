@@ -1,13 +1,10 @@
 .emoji-search-lists {
   bottom: 0px;
-  left: 12px;
-  right: 6px;
+  width: 100%;
   top: auto;
   z-index: 10001;
-  position: absolute;
   overflow-x: hidden;
   overflow-y: scroll;
-  min-width: 100px;
   min-height: 40px;
   max-height: 120px;
   border: 1px solid rgba(0,0,0,.15);
