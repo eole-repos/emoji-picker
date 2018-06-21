@@ -36,7 +36,7 @@
       'custom'   : '/sheets/custom-emoji-data/'
     },
     customEmojiShortCodes: ["raku-smile"],
-    emojiData: {"Custom":[{"is_custom_emoji":true,"name":"ラック","short_name":"raku-smile","short_names":["raku-smile"],"sort_order":1}]}
+    emojiData: {"Custom":[{"is_custom_emoji":true,"name":"ラック","short_name":"raku-smile","short_names":["raku-smile"],"sort_order":1}, {"is_custom_emoji":true,"name":"ラック","short_name":"raku-smile","short_names":["raku-smile"],"sort_order":2}, {"is_custom_emoji":true,"name":"ラック","short_name":"raku-smile","short_names":["raku-smile"],"sort_order":3}]}
   };
 
   /**
@@ -160,7 +160,7 @@
 
     var custom = self.popup.querySelector('[data-group-name="Custom"]');
     if (custom)
-        custom.innerHTML = this.replace_custom_emoji(':raku-normal:');
+        custom.innerHTML = this.replace_custom_emoji(':raku-smile:');
 */
   };
 
