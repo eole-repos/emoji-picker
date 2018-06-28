@@ -1,7 +1,7 @@
 # Demo
 https://eole-repos.github.io/public/emoji-picker/demo/index.html
 
-![emoji-picker gif](./demo/emoji-picker-demo.gif "emoji-picker gif")
+<img src="./demo/emoji-picker-demo.gif" height="360">
 
 # Installation
 
