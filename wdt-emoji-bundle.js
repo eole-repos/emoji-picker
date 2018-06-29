@@ -657,17 +657,6 @@
 */
 
   /**
-   *
-   * @param el
-   * @param cls
-   * @returns {*}
-   */
-  var findParent = function (el, cls) {
-    while ((el = el.parentElement) && !el.classList.contains(cls));
-    return el;
-  };
-
-  /**
    * Replace selection text for :input
    *
    * @param el
@@ -886,28 +875,6 @@
 
   /**
    *
-   * @param query
-   * @param name
-   */
-  function addClassAll(query, name) {
-
-    var elements = document.querySelectorAll(query);
-
-    for (var i = 0; i < elements.length; i++) {
-      var element = elements[i];
-
-      var oldList = classList(element),
-        newList = oldList + name;
-
-      if (hasClass(oldList, name)) return;
-
-      // Trim the opening space.
-      element.className = newList.substring(1);
-    }
-  }
-
-  /**
-   *
    * @param element
    * @param name
    */
@@ -922,31 +889,6 @@
 
     // Trim the opening and closing spaces.
     element.className = newList.substring(1, newList.length - 1);
-  }
-
-  /**
-   *
-   * @param query
-   * @param name
-   */
-  function removeClassAll(query, name) {
-
-    var elements = document.querySelectorAll(query);
-
-    for (var i = 0; i < elements.length; i++) {
-      var element = elements[i];
-
-      var oldList = classList(element),
-        newList;
-
-      if (!hasClass(element, name)) return;
-
-      // Replace the class name.
-      newList = oldList.replace(' ' + name + ' ', ' ');
-
-      // Trim the opening and closing spaces.
-      element.className = newList.substring(1, newList.length - 1);
-    }
   }
 
   function inArray(needle, haystack) {
