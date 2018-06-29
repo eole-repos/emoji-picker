@@ -668,22 +668,6 @@
   };
 
   /**
-   *
-   * @param el
-   * @param cls
-   * @returns {*}
-   */
-  var findChild = function (el, cls) {
-    var children = el.children;
-    for (var i = 0; i < children.length; i++) {
-      var child = children[i];
-      if (child.classList.contains(cls)) {
-        return child;
-      }
-    }
-  };
-
-  /**
    * Replace selection text for :input
    *
    * @param el
