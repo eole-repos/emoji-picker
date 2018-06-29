@@ -674,23 +674,12 @@
    * @param selection
    * @param emo
    */
-  var insertText = function (el, selection, emo, emojiHtml) {
+  var insertText = function (el, emo, emojiHtml) {
     var val = el.value || el.innerHTML || '';
     emo = emo + ' '; //append a space
-
-    if (selection.ce) { // if contenteditable
-      el.focus();
-      document.execCommand('insertHTML', false, emojiHtml.outerHTML);
-      document.execCommand('insertText', false, ' ');
-    } else {
-      var textBefore = val.substring(0, selection.start);
-      textBefore = textBefore.replace(/:\S*$/, '')
-      el.value = textBefore + emo + val.substring(selection.end, selection.len);
-
-      // @todo - [needim] - check browser compatibilities
-      el.selectionStart = el.selectionEnd = (textBefore.length + emo.length);
-      el.focus();
-    }
+    el.focus();
+    document.execCommand('insertHTML', false, emojiHtml.outerHTML);
+    document.execCommand('insertText', false, ' ');
   };
 
   /**
