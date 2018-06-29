@@ -458,7 +458,7 @@
       var selection = getSelection(wdtEmojiBundle.input);
       var emojiImgHtml = genEmojiImageHtml(wdtEmojiBundle.emoji, wdtEmojiBundle.defaults.customEmojiShortCodes, this.dataset.wdtEmojiShortname);
 
-      replaceText(wdtEmojiBundle.input, wdtEmojiBundle.currentRange, selection, ':' + this.dataset.wdtEmojiShortname + ':', emojiImgHtml);
+      replaceText(wdtEmojiBundle.input, wdtEmojiBundle.currentRange, selection, emojiImgHtml);
       fire('select', {el: wdtEmojiBundle.input, event: event, emoji: ':' + this.dataset.wdtEmojiShortname + ':'});
 
       var ce = document.createEvent('Event');
@@ -771,7 +771,7 @@
    * @param selection
    * @param emo
    */
-  var replaceText = function (element, curRange, selection, emo, emojiHtml) {
+  var replaceText = function (element, curRange, selection, emojiHtml) {
     var val = curRange.startContainer.data || '';
     if (selection.ce && window.getSelection) { // if contenteditable
       element.focus();
