@@ -455,10 +455,9 @@
 
     live(emojiSearchElement, 'click', '.wdt-emoji-search-results a.wdt-emoji', function (event) {
       event.preventDefault();
-      var selection = getSelection(wdtEmojiBundle.input);
       var emojiImgHtml = genEmojiImageHtml(wdtEmojiBundle.emoji, wdtEmojiBundle.defaults.customEmojiShortCodes, this.dataset.wdtEmojiShortname);
 
-      replaceText(wdtEmojiBundle.input, wdtEmojiBundle.currentRange, selection, emojiImgHtml);
+      replaceText(wdtEmojiBundle.input, wdtEmojiBundle.currentRange, emojiImgHtml);
       fire('select', {el: wdtEmojiBundle.input, event: event, emoji: ':' + this.dataset.wdtEmojiShortname + ':'});
 
       var ce = document.createEvent('Event');
@@ -479,10 +478,9 @@
     var emojiList = document.querySelector('.wdt-emoji-list');
     live(emojiList, 'click', '.wdt-emoji-list a.wdt-emoji', function (event) {
       event.preventDefault();
-      var selection = getSelection(wdtEmojiBundle.input);
       var emojiHtml = genEmojiImageHtml(wdtEmojiBundle.emoji, wdtEmojiBundle.defaults.customEmojiShortCodes, this.dataset.wdtEmojiShortname);
 
-      insertText(wdtEmojiBundle.input, selection, ':' + this.dataset.wdtEmojiShortname + ':', emojiHtml);
+      insertText(wdtEmojiBundle.input, ':' + this.dataset.wdtEmojiShortname + ':', emojiHtml);
       fire('select', {el: wdtEmojiBundle.input, event: event, emoji: ':' + this.dataset.wdtEmojiShortname + ':'});
 
       var ce = document.createEvent('Event');
@@ -686,58 +684,6 @@
   };
 
   /**
-   *
-   * @param el
-   * @returns {*}
-   */
-  var getSelection = function (el) {
-    var result = {};
-
-    if (el.getAttribute('contenteditable')) {
-      return {
-        el: el,
-        ce: true
-      }
-    }
-
-    if (window.getSelection) {
-      var val = el.value || el.innerHTML,
-        len = val.length,
-        start = el.selectionStart,
-        end = el.selectionEnd,
-        sel = val.substring(start, end);
-
-      result = {
-        "el"   : el,
-        "start": start,
-        "end"  : end,
-        "len"  : len,
-        "sel"  : sel
-      };
-    }
-    else if (document.selection) { // ie
-      var range = document.selection.createRange(),
-        value = el.value || el.innerHTML,
-        stored_range = range.duplicate();
-
-      stored_range.moveToElementText(el);
-      stored_range.setEndPoint('EndToEnd', range);
-      el.selectionStart = stored_range.text.length - range.text.length;
-      el.selectionEnd = el.selectionStart + range.text.length;
-
-      result = {
-        "el"   : el,
-        "start": el.selectionStart,
-        "end"  : el.selectionEnd,
-        "len"  : value.length,
-        "sel"  : range.text
-      };
-    }
-
-    return result;
-  };
-
-  /**
    * Replace selection text for :input
    *
    * @param el
@@ -771,9 +717,9 @@
    * @param selection
    * @param emo
    */
-  var replaceText = function (element, curRange, selection, emojiHtml) {
+  var replaceText = function (element, curRange, emojiHtml) {
     var val = curRange.startContainer.data || '';
-    if (selection.ce && window.getSelection) { // if contenteditable
+    if (window.getSelection) { // if contenteditable
       element.focus();
       var sel = window.getSelection();
       var textBefore = val.substring(0, sel.anchorOffset),
