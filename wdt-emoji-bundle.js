@@ -66,7 +66,33 @@
       self.defaults.emojiData[category] = EmojiDataByCategory.emojiDataByCategory[category];
     }
 
+    wdtEmojiBundle.setMessageInputObserver(0);
+    wdtEmojiBundle.initEmojiPicker();
+    wdtEmojiBundle.initEmojiSearchPopup('.wdt-emoji-bundle-enabled');
     return self;
+  };
+
+  wdtEmojiBundle.setMessageInputObserver = function(count){
+    var msgInput = document.querySelector("#wdt-emoji-bundle-enabled");
+
+    var initMessageInput = function () {
+        var msgInput = document.querySelector("#wdt-emoji-bundle-enabled");
+        if (msgInput) {
+            if (msgInput.innerHTML == '' || msgInput.innerHTML == '<br>')
+                msgInput.innerHTML = '<div><br></div>';
+        }
+    };
+
+    if (msgInput) {
+        if ('MutationObserver' in window) {
+            var mo = new MutationObserver(function(_mutationRecords) {
+                initMessageInput();
+            })
+            mo.observe(msgInput, {subtree: true, attributes: true, childList: true, characterData: true})
+        }
+    } else if (count <= 50) {
+        setTimeout(wdtEmojiBundle.setMessageInputObserver(count + 1), 100);
+    }
   };
 
   /**
