@@ -65,21 +65,66 @@
     for (var category in EmojiDataByCategory.emojiDataByCategory) {
       self.defaults.emojiData[category] = EmojiDataByCategory.emojiDataByCategory[category];
     }
+    self.isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 
     wdtEmojiBundle.setMessageInputObserver(0);
     wdtEmojiBundle.initEmojiPicker();
     wdtEmojiBundle.initEmojiSearchPopup('.wdt-emoji-bundle-enabled');
+
+    var msgInput = document.querySelector(".wdt-emoji-bundle-enabled");
+    if (msgInput) {
+      if (!msgInput.classList.contains('emoji-ready')) {
+        if (msgInput.getAttribute('contenteditable')) {
+          msgInput.addEventListener('paste', function(ele) {
+            ele.preventDefault();
+            ele.stopPropagation();
+
+            let paste = (ele.clipboardData || window.clipboardData).getData('text');
+            if (wdtEmojiBundle.isChrome)
+              paste = paste.replace( new RegExp('\n\n', 'g'), '\n');
+
+            document.execCommand('insertText', false, paste);
+          });
+        }
+        msgInput.classList.add("emoji-ready");
+      }
+    }
+
     return self;
   };
 
   wdtEmojiBundle.setMessageInputObserver = function(count){
-    var msgInput = document.querySelector("#wdt-emoji-bundle-enabled");
+    var msgInput = document.querySelector(".wdt-emoji-bundle-enabled");
 
     var initMessageInput = function () {
-        var msgInput = document.querySelector("#wdt-emoji-bundle-enabled");
+        var msgInput = document.querySelector(".wdt-emoji-bundle-enabled");
         if (msgInput) {
             if (msgInput.innerHTML == '' || msgInput.innerHTML == '<br>')
-                msgInput.innerHTML = '<div><br></div>';
+              msgInput.innerHTML = '<p><br></p>';
+            else
+              for (var i = 0; i < msgInput.childElementCount; i ++) {
+                var childNode = msgInput.childNodes[i];
+                var sel = window.getSelection();
+                if (childNode.nodeName == '#text' || childNode.nodeName == 'IMG') {
+                  if (sel.rangeCount && sel.getRangeAt(0).startContainer == childNode) {
+                      var curRange = sel.getRangeAt(0);
+                      var startOffset = curRange.startOffset;
+                      var endOffset = curRange.endOffset;
+                      sel.removeAllRanges();
+                  }
+
+                  var pNode = document.createElement("p");
+                  pNode.appendChild(childNode);
+                  msgInput.replaceChild(pNode, msgInput.childNodes[i]);
+
+                  if (curRange) {
+                      var range = document.createRange();
+                      range.setStart(childNode, startOffset);
+                      range.setEnd(childNode, endOffset);
+                      sel.addRange(range);
+                  }
+                }
+              };
         }
     };
 
@@ -109,25 +154,9 @@
 
         var el = self.elements[i];
         if (el.getAttribute('contenteditable')) {
-          el.addEventListener('keypress', function(ele) {
-            if (ele.target.innerHTML == '<br>' || ele.target.innerHTML == '')
-              ele.target.innerHTML = '<div><br></div>';
-          });
-
-          el.addEventListener('paste', function(ele) {
-            ele.preventDefault();
-            ele.stopPropagation();
-            if (ele.target.getAttribute('contenteditable')) {
-              if (ele.target.innerHTML == '<br>' || ele.target.innerHTML == '')
-                ele.target.innerHTML = '<div><br></div>';
-            }
-            let paste = (ele.clipboardData || window.clipboardData).getData('text');
-            document.execCommand('insertText', false, paste);
-          });
-
           el.dataset.rangeIndex = i;
           wdtEmojiBundle.addRangeStore(el);
-      }
+        }
 
         if (hasClass(el, 'wdt-emoji-open-on-colon')) {
           parent.addEventListener('keyup', wdtEmojiBundle.onKeyup)

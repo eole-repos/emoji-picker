@@ -1,3 +1,7 @@
+.wdt-emoji-bundle-enabled > p{
+  margin: 0px;
+}
+
 .emoji-search-lists {
   bottom: 0px;
   width: 100%;
